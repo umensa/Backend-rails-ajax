@@ -1,0 +1,30 @@
+<h1>Ajax#home</h1>
+<p>Find me in app/views/ajax/home.html.erb</p>
+<button id="list-todos">List todos</button>
+<div id="results-div"></div>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    const listTodosButton = document.getElementById("list-todos");
+    listTodosButton.addEventListener('click', (event) => {
+      var eventRequest = new XMLHttpRequest();
+      eventRequest.onreadystatechange = function () {
+        if(eventRequest.readyState === XMLHttpRequest.DONE) {
+          if  (eventRequest.status === 200) {
+      //      var jsonArr = JSON.parse(eventRequest.responseText);
+            var resultsDiv = document.getElementById("results-div");
+            resultsDiv.innerHTML=eventRequest.responseText;
+      //      for (var i=0; i < jsonArr.length; i +=1) {
+
+        //    }
+          } else {
+            alert(eventRequest.statusText);
+          }
+        }
+      }
+      eventRequest.open('GET', 'http://localhost:3001/todos');
+      eventRequest.send();
+
+    });
+});
+</script>
