@@ -1,4 +1,4 @@
-<h1>Ajax#home</h1>
+<h1>AJAX</h1>
 <p>Find me in app/views/ajax/home.html.erb</p>
 <div id="rest-ops">
 <button id="list-users" type="button">List users</button><br>
@@ -57,22 +57,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
       });
     }
   });
-  // createTodoButton.addEventListener('click', (event) => {
-  //   var eventRequest = new XMLHttpRequest();
-  //   eventRequest.onreadystatechange = function () {
-  //     if(eventRequest.readyState === XMLHttpRequest.DONE) {
-  //       if  (eventRequest.status === 201) {     // this is the expected return code for a POST to create a todo
-  //         resultsDiv.textContent=eventRequest.responseText; // this will be the todo that is created
-  //       } else {
-  //         alert(`Return code ${eventRequest.status} ${eventRequest.statusText} ${eventRequest.responseText}`);  // error handling
-  //       }
-  //     }
-  //   };
-  //   eventRequest.open('POST', 'http://localhost:3001/todos');  // method and URL to create a todo
-  //   eventRequest.setRequestHeader("Content-Type", "application/json");  // always do this on POST or PUT
-  //   let dataToSend = `{"title": "${todoTitle.value}", "created_by": "${todoCreatedBy.value}"}` // JSON for the create
-  //   console.log("sending data:",dataToSend)
-  //   eventRequest.send(dataToSend);
-  // });
 });
 </script>
