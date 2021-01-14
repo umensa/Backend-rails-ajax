@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const listUsersButton = document.getElementById('list-users');
   const createUserButton = document.getElementById('create-user');
   const userName = document.getElementById('user-username');
-  const userPassword = document.getElementById('user-password')
+  const userPassword = document.getElementById('user-password');
+  const users_path = 'http://localhost/3001/users'
+  
   restOpsDiv.addEventListener('click', (event) => {
     if (event.target === listUsersButton) {
       fetch('http://localhost:3001/api/v1/users').then((response) => {
@@ -30,6 +32,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         } else {
           alert(`Return code ${response.status} ${response.statusText}`);
         }
+      }).catch((error) => {
+        console.log(error);
+        alert(error);
       });
     } else if (event.target === createUserButton) {
       var dataObject = {
@@ -52,6 +57,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         } else {
           response.json().then((data) => {
             alert(`Return code ${response.status} ${response.statusText} ${JSON.stringify(data)}`);
+          }).catch((error) => {
+            console.log(error);
+            alert(error);
           });
         }
       });
