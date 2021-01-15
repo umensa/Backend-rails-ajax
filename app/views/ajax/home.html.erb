@@ -3,59 +3,12 @@
 <div id="rest-ops">
 <button id="list-users" type="button">List users</button><br>
 <label>username</label><input id="user-username"><label>password</label>
-<input id="user-password"><button id="create-user" type="button">Create user</button>
+<input id="user-password"><button id="create-user" type="button">Create user</button><br>
+<label>user_id</label><input id="user-id" type="number"><label>username</label>
+<input id="user-username1"><label>password</label>
+<input id="user-password1"><button id="update-user" type="button">Update user</button><br>
 </div>
 <div id="results-div"></div>
 <script>
-document.addEventListener('DOMContentLoaded', (event) => {
-  console.log('DOM fully loaded and parsed');
-  const resultsDiv = document.getElementById('results-div');
-  const restOpsDiv = document.getElementById('rest-ops');
-  const listUsersButton = document.getElementById('list-users');
-  const createUserButton = document.getElementById('create-user');
-  const userName = document.getElementById('user-username');
-  const userPassword = document.getElementById('user-password')
-  restOpsDiv.addEventListener('click', (event) => {
-    if (event.target === listUsersButton) {
-      fetch('http://localhost:3001/api/v1/users').then((response) => {
-        if (response.status === 200) {
-          resultsDiv.innerHTML = '';
-          response.json().then((data) => {
-            for (let i=0; i<data.length; i++) {
-              let parag = document.createElement('P');
-              parag.textContent = JSON.stringify(data[i]);
-              resultsDiv.appendChild(parag);
-            }
-          });
-        } else {
-          alert(`Return code ${response.status} ${response.statusText}`);
-        }
-      });
-    } else if (event.target === createUserButton) {
-      var dataObject = {
-        username: userName.value,
-        password: userPassword.value
-      }
-      fetch('http://localhost:3001/api/v1/users',
-        { method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(dataObject)
-        }
-      ).then((response) => {
-        if (response.status === 201) {
-          response.json().then((data) => {
-            resultsDiv.innerHTML = '';
-            let parag = document.createElement('P');
-            parag.textContent = JSON.stringify(data);
-            resultsDiv.appendChild(parag);
-          });
-        } else {
-          response.json().then((data) => {
-            alert(`Return code ${response.status} ${response.statusText} ${JSON.stringify(data)}`);
-          });
-        }
-      });
-    }
-  });
-});
+document.addEventListener('DOMContentLoaded', handle_ajax(event));
 </script>
