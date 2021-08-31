@@ -6,11 +6,13 @@ function handle_ajax(event) {
   const createUserButton = document.getElementById('create-user');
   const userName = document.getElementById('user-username');
   const userPassword = document.getElementById('user-password');
-  const updateUserButton = document.getElementById('update-user')
-  const userID = document.getElementById('user-id')
-  const userName1 = document.getElementById('user-username1')
-  const userPassword1 = document.getElementById('user-password1')
-  const users_path = 'http://localhost:3001/api/v1/users'
+  const updateUserButton = document.getElementById('update-user');
+  const userID = document.getElementById('user-id');
+  const userName1 = document.getElementById('user-username1');
+  const userPassword1 = document.getElementById('user-password1');
+  const users_path = 'http://localhost:3001/api/v1/users';
+  const deleteUserButton = document.getElementById('delete-user');
+  const delUserID = document.getElementById('del-user-id')
 
   restOpsDiv.addEventListener('click', (event) => {
     if (event.target === listUsersButton) {
@@ -91,6 +93,29 @@ function handle_ajax(event) {
           });
         }
       });
+      // Below the logic for delete a user
+    } else if (event.target === deleteUserButton) {
+        fetch(`${users_path}/${delUserID.value}`,
+        {
+          method: 'DELETE',
+          headers: {'Content-Type': 'application/json'}
+        }).then((response) => {
+          if (response.status === 200) {
+          response.json().then((data) => {
+            resultsDiv.innerHTML = '';
+            let parag = document.createElement('P');
+            parag.textContent = JSON.stringify(data);
+            resultsDiv.appendChild(parag);
+          });
+        } else {
+          response.json().then((data) => {
+            alert(`Return code ${response.status} ${response.statusText} ${JSON.stringify(data)}`);
+          }).catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+        }
+        })
     }
   });
 }
