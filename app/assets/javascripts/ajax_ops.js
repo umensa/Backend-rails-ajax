@@ -17,8 +17,13 @@ function handle_ajax(event) {
   const listUserFactsButton = document.getElementById('list-user-facts');
   const createFactUserID = document.getElementById('create-fact-user');
   const createFactButton = document.getElementById('create-fact');
-  const fact = document.getElementById('fact');
+  const fact = document.getElementById('create-fact-text');
   const likes = document.getElementById('likes');
+  const updateFactButton = document.getElementById('update-fact');
+  const updateFactUserID = document.getElementById('update-fact-user-id');
+  const updateFactID = document.getElementById('update-fact-id');
+  const updateFact = document.getElementById('update-fact-text');
+  const updateLikes = document.getElementById('update-likes');
 
   restOpsDiv.addEventListener('click', (event) => {
     if (event.target === listUsersButton) {
@@ -167,6 +172,41 @@ function handle_ajax(event) {
         body: JSON.stringify(dataObject)
       }).then((response) => {
         if (response.status === 201) {
+          response.json().then((data) => {
+            resultsDiv.innerHTML = '';
+            let parag = document.createElement('P');
+            parag.textContent = JSON.stringify(data);
+            resultsDiv.appendChild(parag);
+          });
+        } else {
+          response.json().then((data) => {
+            alert(`Return code ${response.status} ${response.statusText} ${JSON.stringify(data)}`);
+          }).catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+        }
+      });
+    }
+    // Update a fact
+    else if (event.target === updateFactButton) {
+      var dataObject = {
+        fact_text: updateFact.value,
+        likes: updateLikes.value
+      }
+      if (dataObject.updateFact === "") {  // blank fact is not supported
+        delete dataObject.updateFact;
+      }
+      if (dataObject.updateLikes === "") { // blank likes is not supported
+        delete dataObject.updateLikes;
+      }
+      fetch(`${users_path}/${updateFactUserID.value}/facts/${updateFactID.value}`,
+        { method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dataObject)
+        }
+      ).then((response) => {
+        if (response.status === 200) {
           response.json().then((data) => {
             resultsDiv.innerHTML = '';
             let parag = document.createElement('P');
