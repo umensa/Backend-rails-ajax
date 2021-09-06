@@ -24,6 +24,9 @@ function handle_ajax(event) {
   const updateFactID = document.getElementById('update-fact-id');
   const updateFact = document.getElementById('update-fact-text');
   const updateLikes = document.getElementById('update-likes');
+  const deleteFact = document.getElementById('delete-fact');
+  const delFactUserID = document.getElementById('del-fact-user-id');
+  const delFactID = document.getElementById('del-fact-id');
 
   restOpsDiv.addEventListener('click', (event) => {
     if (event.target === listUsersButton) {
@@ -222,6 +225,30 @@ function handle_ajax(event) {
           });
         }
       });
+    }
+    // Delete a fact
+    else if (event.target === deleteFact) {
+        fetch(`${users_path}/${delFactUserID.value}/facts/${delFactID.value}`,
+        {
+          method: 'DELETE',
+          headers: {'Content-Type': 'application/json'}
+        }).then((response) => {
+          if (response.status === 200) {
+          response.json().then((data) => {
+            resultsDiv.innerHTML = '';
+            let parag = document.createElement('P');
+            parag.textContent = JSON.stringify(data);
+            resultsDiv.appendChild(parag);
+          });
+        } else {
+          response.json().then((data) => {
+            alert(`Return code ${response.status} ${response.statusText} ${JSON.stringify(data)}`);
+          }).catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+        }
+        });
     }
   });
 }
