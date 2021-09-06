@@ -6,11 +6,27 @@ function handle_ajax(event) {
   const createUserButton = document.getElementById('create-user');
   const userName = document.getElementById('user-username');
   const userPassword = document.getElementById('user-password');
-  const updateUserButton = document.getElementById('update-user')
-  const userID = document.getElementById('user-id')
-  const userName1 = document.getElementById('user-username1')
-  const userPassword1 = document.getElementById('user-password1')
-  const users_path = 'http://localhost:3001/api/v1/users'
+  const updateUserButton = document.getElementById('update-user');
+  const userID = document.getElementById('user-id');
+  const userName1 = document.getElementById('user-username1');
+  const userPassword1 = document.getElementById('user-password1');
+  const users_path = 'http://localhost:3001/api/v1/users';
+  const deleteUserButton = document.getElementById('delete-user');
+  const delUserID = document.getElementById('del-user-id');
+  const factsUserID = document.getElementById('facts-user');
+  const listUserFactsButton = document.getElementById('list-user-facts');
+  const createFactUserID = document.getElementById('create-fact-user');
+  const createFactButton = document.getElementById('create-fact');
+  const fact = document.getElementById('create-fact-text');
+  const likes = document.getElementById('likes');
+  const updateFactButton = document.getElementById('update-fact');
+  const updateFactUserID = document.getElementById('update-fact-user-id');
+  const updateFactID = document.getElementById('update-fact-id');
+  const updateFact = document.getElementById('update-fact-text');
+  const updateLikes = document.getElementById('update-likes');
+  const deleteFact = document.getElementById('delete-fact');
+  const delFactUserID = document.getElementById('del-fact-user-id');
+  const delFactID = document.getElementById('del-fact-id');
 
   restOpsDiv.addEventListener('click', (event) => {
     if (event.target === listUsersButton) {
@@ -91,6 +107,148 @@ function handle_ajax(event) {
           });
         }
       });
+    }
+    // Delete a user
+    else if (event.target === deleteUserButton) {
+        fetch(`${users_path}/${delUserID.value}`,
+        {
+          method: 'DELETE',
+          headers: {'Content-Type': 'application/json'}
+        }).then((response) => {
+          if (response.status === 200) {
+          response.json().then((data) => {
+            resultsDiv.innerHTML = '';
+            let parag = document.createElement('P');
+            parag.textContent = JSON.stringify(data);
+            resultsDiv.appendChild(parag);
+          });
+        } else {
+          response.json().then((data) => {
+            alert(`Return code ${response.status} ${response.statusText} ${JSON.stringify(data)}`);
+          }).catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+        }
+        });
+    }
+    // List user's facts
+    else if (event.target === listUserFactsButton) {
+      fetch(`${users_path}/${factsUserID.value}/facts`,
+      {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+      }).then((response) => {
+        if (response.status === 200) {
+        response.json().then((data) => {
+          resultsDiv.innerHTML = '';
+          let parag = document.createElement('P');
+          parag.textContent = JSON.stringify(data);
+          resultsDiv.appendChild(parag);
+        });
+      } else {
+        response.json().then((data) => {
+          alert(`Return code ${response.status} ${response.statusText} ${JSON.stringify(data)}`);
+        }).catch((error) => {
+          console.log(error);
+          alert(error);
+        });
+      }
+      });
+    }
+    // Create a fact
+    else if (event.target === createFactButton) {
+      var dataObject = {
+        fact_text: fact.value,
+        likes: likes.value
+      }
+      if (dataObject.fact === "") {  // blank fact is not supported
+        delete dataObject.fact;
+      }
+      if (dataObject.likes === "") { // blank likes is not supported
+        delete dataObject.likes;
+      }
+      fetch(`${users_path}/${createFactUserID.value}/facts`,
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(dataObject)
+      }).then((response) => {
+        if (response.status === 201) {
+          response.json().then((data) => {
+            resultsDiv.innerHTML = '';
+            let parag = document.createElement('P');
+            parag.textContent = JSON.stringify(data);
+            resultsDiv.appendChild(parag);
+          });
+        } else {
+          response.json().then((data) => {
+            alert(`Return code ${response.status} ${response.statusText} ${JSON.stringify(data)}`);
+          }).catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+        }
+      });
+    }
+    // Update a fact
+    else if (event.target === updateFactButton) {
+      var dataObject = {
+        fact_text: updateFact.value,
+        likes: updateLikes.value
+      }
+      if (dataObject.updateFact === "") {  // blank fact is not supported
+        delete dataObject.updateFact;
+      }
+      if (dataObject.updateLikes === "") { // blank likes is not supported
+        delete dataObject.updateLikes;
+      }
+      fetch(`${users_path}/${updateFactUserID.value}/facts/${updateFactID.value}`,
+        { method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dataObject)
+        }
+      ).then((response) => {
+        if (response.status === 200) {
+          response.json().then((data) => {
+            resultsDiv.innerHTML = '';
+            let parag = document.createElement('P');
+            parag.textContent = JSON.stringify(data);
+            resultsDiv.appendChild(parag);
+          });
+        } else {
+          response.json().then((data) => {
+            alert(`Return code ${response.status} ${response.statusText} ${JSON.stringify(data)}`);
+          }).catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+        }
+      });
+    }
+    // Delete a fact
+    else if (event.target === deleteFact) {
+        fetch(`${users_path}/${delFactUserID.value}/facts/${delFactID.value}`,
+        {
+          method: 'DELETE',
+          headers: {'Content-Type': 'application/json'}
+        }).then((response) => {
+          if (response.status === 200) {
+          response.json().then((data) => {
+            resultsDiv.innerHTML = '';
+            let parag = document.createElement('P');
+            parag.textContent = JSON.stringify(data);
+            resultsDiv.appendChild(parag);
+          });
+        } else {
+          response.json().then((data) => {
+            alert(`Return code ${response.status} ${response.statusText} ${JSON.stringify(data)}`);
+          }).catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+        }
+        });
     }
   });
 }

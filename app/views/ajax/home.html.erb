@@ -1,12 +1,47 @@
+<!-- Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+
+<!-- CSS Reset -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+
+<!-- Milligram CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
 <h1>AJAX</h1>
 <p>Find me in app/views/ajax/home.html.erb</p>
 <div id="rest-ops">
-<button id="list-users" type="button">List users</button><br>
-<label>username</label><input id="user-username"><label>password</label>
-<input id="user-password"><button id="create-user" type="button">Create user</button><br>
-<label>user_id</label><input id="user-id" type="number"><label>username</label>
-<input id="user-username1"><label>password</label>
-<input id="user-password1"><button id="update-user" type="button">Update user</button><br>
+	<!-- List users -->
+	<button id="list-users" type="button">List users</button><br>
+	<!-- Create a user -->
+	<label>username</label><input id="user-username">
+	<label>password</label><input id="user-password">
+	<button id="create-user" type="button">Create user</button><br>
+	<!-- Update a user -->
+	<label>user id</label><input id="user-id" type="number">
+	<label>username</label><input id="user-username1">
+	<label>password</label><input id="user-password1">
+	<button id="update-user" type="button">Update user</button><br>
+	<!-- Delete a user -->
+	<label>user id</label><input type="number" id="del-user-id">
+	<button id="delete-user" type="button">Delete user</button><br>
+	<!-- List facts belongs to a user -->
+	<label>user id</label><input type="number" id="facts-user">
+	<button id="list-user-facts" type="button">List facts</button><br>
+	<!-- Create fact -->
+	<label>user id</label><input type="number" id="create-fact-user">
+	<label>fact</label><input type="text" id="create-fact-text">
+	<label>likes</label><input type="number" id="likes">
+	<button id="create-fact" type="button">Create fact</button><br>
+	<!-- Update fact -->
+	<label>user id</label><input type="number" id="update-fact-user-id">
+	<label>fact id</label><input type="number" id="update-fact-id">
+	<label>fact</label><input type="text" id="update-fact-text">
+	<label>likes</label><input type="number" id="update-likes">
+	<button id="update-fact"  type="button">Update fact</button><br>
+	<!-- Delete fact -->
+	<label>user id</label><input type="number" id="del-fact-user-id">
+	<label>fact id</label><input type="number" id="del-fact-id">
+	<button id="delete-fact" type="button">delete fact</button><br>
 </div>
 <div id="results-div"></div>
 <script>
